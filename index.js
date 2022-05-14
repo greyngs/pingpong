@@ -36,7 +36,19 @@ let paddle2 = {
 //window.addEventListener("keydown", changeDirection);
 //resetBtn.addEventListener("click", resetGame);
 
-drawPaddles();
+gameStart();
+
+function gameStart(){
+    //createBall();
+    nextTick();
+};
+
+function nextTick(){
+    intervalID = setTimeout(() => {
+        clearBoard();
+        drawPaddles();
+    }, 10);
+};
 
 function drawPaddles(){
     ctx.strokeStyle = paddleBorder;
@@ -48,4 +60,9 @@ function drawPaddles(){
     ctx.fillStyle = paddle2Color;
     ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+};
+
+function clearBoard(){
+    ctx.fillStyle = boardBackground;
+    ctx.fillRect(0, 0, gameWidth, gameHeight);
 };
