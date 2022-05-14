@@ -39,7 +39,7 @@ let paddle2 = {
 gameStart();
 
 function gameStart(){
-    //createBall();
+    createBall();
     nextTick();
 };
 
@@ -47,6 +47,9 @@ function nextTick(){
     intervalID = setTimeout(() => {
         clearBoard();
         drawPaddles();
+        moveBall();
+        drawBall(ballX, ballY);
+        nextTick();
     }, 10);
 };
 
@@ -65,4 +68,38 @@ function drawPaddles(){
 function clearBoard(){
     ctx.fillStyle = boardBackground;
     ctx.fillRect(0, 0, gameWidth, gameHeight);
+};
+
+function drawBall(ballX, ballY){
+    ctx.fillStyle = ballColor;
+    ctx.strokeStyle = ballBorderColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+};
+
+function moveBall(){
+    ballX += (ballSpeed * ballXDirection);
+    ballY += (ballSpeed * ballYDirection);
+};
+
+function createBall(){
+    ballSpeed = 1;
+    if(Math.round(Math.random()) == 1){
+        ballXDirection =  1; 
+    }
+    else{
+        ballXDirection = -1; 
+    }
+    if(Math.round(Math.random()) == 1){
+        ballYDirection = Math.random() * 1; //more random directions
+    }
+    else{
+        ballYDirection = Math.random() * -1; //more random directions
+    }
+    ballX = gameWidth / 2;
+    ballY = gameHeight / 2;
+    drawBall(ballX, ballY);
 };
